@@ -16,7 +16,7 @@ when it is affected by cancer.)
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/aliakhlaghiii/final-assignment.git
+   https://github.com/aliakhlaghiii/final_assignment.git
 ## Usage
 python3 main.py
 ## Project Structure
