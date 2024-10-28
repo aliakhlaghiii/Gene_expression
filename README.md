@@ -18,7 +18,7 @@ when it is affected by cancer.)
    ```bash
    https://github.com/aliakhlaghiii/final_assignment.git
 ## Usage
-python3 main.py
+python3 main.py file_path destination
 ## Project Structure
 
 - GeneExpressionData.py:
