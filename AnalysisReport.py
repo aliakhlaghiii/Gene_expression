@@ -4,7 +4,7 @@ class AnalysisReport:
         self.destination = destination
 
     def display(self, analysis):
-        while True:   # I put it in while loop to if user enter an invalid gene name and type, it repeats.
+        while True:   # I put it in a while loop so if the user enters an invalid gene name and type, it repeats.
             gene = input("Enter the gene name: ").strip()
             if gene in analysis.gene_data.gene_exp:
                 print("Choose the type of analysis:")
@@ -39,19 +39,23 @@ class AnalysisReport:
             if result is not None:
                 if user_input == '5':
                     if not result:  # Check if the result list is empty
-                        result_str = "There is no gene above threshold."
+                        '''assume this sentence to the result_str just for display'''
+                        result_str = "There is no gene above threshold."   
                     else:   # result exists
-                        '''while value is in result, the results separated by ',' will be appeared on the screen'''
+                        '''while value is in result, the results with comma at the end of each result 
+                        will appear on the screen''
                         result_str = ', '.join(f"{val:.3f}" for val in result)
                 else:
                     result_str = f"{result:.3f}"  # for other analysis types, it shows the result
 
-                if self.destination == 'screen':
+                if self.destination == 'screen':   # destination argument
                     print(f"{analysis_type} for {gene}: {result_str}")
                 else:
-                    with open(self.destination, 'w') as file:
+                    '''if the user chooses file instead of the screen, can enter the file path as an argument in the 
+                    command line'''
+                    with open(self.destination, 'w') as file:   # open the file in write mode
                         file.write(f"{analysis_type} for {gene}: {result_str}\n")
                         print(f"The result was added to: {self.destination}")
-                break
-            else:
-                print(f"{analysis_type} could not be calculated. Gene data might be missing.")
+                break   # end of the loop if the result exists
+            else:   # if the result is None
+                print(f"{analysis_type} could not be calculated.")
