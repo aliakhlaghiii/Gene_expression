@@ -1,16 +1,16 @@
-'''in this assignment, we need just 3 modules among the whole modules of standard statistics library. so,
-I imported just mean, standard deviation and median to save the memory'''
-from statistics import mean, median, stdev
+'''in this assignment, we need just 3 modules among the whole modules of the standard statistics library. so,
+I imported just the mean, standard deviation and median to save the memory'''
+from statistics import mean, median, stdev   # call statistics library
 
-'''I have made a class in order to do some statistical operations. Also, I 
+'''I have made a class to do some statistical operations. Also, I 
 made an object(gene_data) of GeneExpressionData class as a parameter of statisticalAnalysis class'''
 class StatisticalAnalysis:
-    def __init__(self, gene_data):   # initializing
+    def __init__(self, gene_data):   # initializing with gene_data(as an instance).
         self.gene_data = gene_data
-        self.above_threshold_values = []  # a list that can keep the values of genes that are above threshold
+        self.above_threshold_values = []  # a list that can keep the values of genes that are above the threshold
 
     '''a function to calculate the mean of gene values(expressions)
-    all of them do the same works. if the gene exists, do a task, otherwise return None'''
+    all of them do the same work. if the gene exists, do a task, otherwise return None'''
     def calculate_mean(self, gene):
         return mean(self.gene_data.gene_exp[gene]) if gene in self.gene_data.gene_exp else None
 
@@ -31,6 +31,6 @@ class StatisticalAnalysis:
         return None
     '''according to the threshold value that user enters, compares the gene expressions from gene_exp 
     dictionary. if the value is greater than threshold, return its value and add it to the list'''
-    def above_threshold(self, gene, threshold):
+    def above_threshold(self, gene, threshold):   # initialize with a special gene and threshold amount.
         self.above_threshold_values = [value for value in self.gene_data.gene_exp[gene] if value > threshold]
         return self.above_threshold_values
