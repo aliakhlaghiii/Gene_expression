@@ -6,19 +6,33 @@ by this code, can see the mean, median, and standard deviation of values among 3
 calculate the differential (The numerical difference between the values of a gene when it is in a normal state and
 when it is affected by cancer.)
 ## Table of Contents
-
+- [Dependencies](#dependencies)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Classes and Methods](#classes-and-methods)
 - [Contact](#contact)
+## Dependencies
+- Python 3.x
+
+Libraries:
+* statistics (standard Python library)
+* argparse (standard Python library)
+
+Ensure that your Python environment is set up with the necessary modules before running the program.
+
 ## Installation
 
 1. Clone the repository:
    ```bash
    https://github.com/aliakhlaghiii/final_assignment.git
 ## Usage
-python3 main.py file_path, destination
+- python3 main.py file path, destination, gene name, threshold value
+
+You should replace the whole arguments above with your data
+
+- Example of command-line execution:
+  python3 main.py /users/data/liver_cancer_gene_expression.csv screen 1007_s_at 5.4
 ## Project Structure
 
 - GeneExpressionData.py:
@@ -58,7 +72,7 @@ gene_data: An object of GeneExpressionData class.
 2. calculate_sd(gene): Calculate the standard deviation of expression values for a specific gene.
 3. calculate_median(gene): Calculate the median expression value for a specific gene.
 4. calculate_differential(gene): Calculate the differential expression of a specific gene (normal mean - HCC mean).
-5. above_threshold(gene, threshold): filter the genes that their values are above the threshold.
+5. above_threshold(gene, threshold): filter the gene expressions above the threshold with its sample name.
 ### AnalysisReport
 #### purpose:
 Manages the display and output of analysis results in a suitable format.
@@ -69,5 +83,5 @@ destination: Output destination for results (screen or file path).
 display(analysis): Prompts user input, performs analysis, and displays or saves results.
 
 ## Contact
-- Maintainer: Ali Akhlaghi
+- Author: Ali Akhlaghi
 - Email: a.akhlaghi@st.hanze.nl
