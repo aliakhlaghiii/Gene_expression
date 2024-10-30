@@ -24,7 +24,7 @@ class AnalysisReport:
             if self.destination == 'screen':   # check the destination
                 print(f"{analysis_type} for {gene}: {result_str}")   # use f-string to show the result
             else:   # if the destination is a file, this snippet code can write a file into the path the user enters
-                with open(self.destination, 'w') as file:
+                with open(self.destination, 'a') as file:
                     file.write(f"{analysis_type} for {gene}: {result_str}\n")
 
         '''keep the value of above threshold function into a variable'''
@@ -35,12 +35,12 @@ class AnalysisReport:
             above_threshold_str = "\n".join(
                 f"{sample}: {value:.3f}" for sample, value in threshold_results
             )
-            if self.destination == 'screen':   # check the destination
+            if self.destination == 'screen':   # check the destination for threshold result
                 print(f"Values above threshold {threshold} for {gene}:\n{above_threshold_str}")
             else:
-                with open(self.destination, 'w') as file:
+                with open(self.destination, 'a') as file:   # append the result to the existed file in file path
                     file.write(f"Values above threshold {threshold} for {gene}:\n{above_threshold_str}\n")
-        else:
+        else:   # if there is not any threshold result
             if self.destination == 'screen':
                 print(f"No values above threshold {threshold} for {gene}.")
             else:
