@@ -43,7 +43,7 @@ class AnalysisReport:
                         result_str = "There is no gene above threshold."   
                     else:   # result exists
                         '''while value is in result, the results with comma at the end of each result 
-                        will appear on the screen''
+                        will appear on the screen'''
                         result_str = ', '.join(f"{val:.3f}" for val in result)
                 else:
                     result_str = f"{result:.3f}"  # for other analysis types, it shows the result
