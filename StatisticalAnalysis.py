@@ -7,7 +7,6 @@ made an object(gene_data) of GeneExpressionData class as a parameter of statisti
 class StatisticalAnalysis:
     def __init__(self, gene_data):   # initializing with gene_data(as an instance).
         self.gene_data = gene_data
-        self.above_threshold_values = []  # a list that can keep the values of genes that are above the threshold
 
     '''a function to calculate the mean of gene values(expressions)
     all of them do the same work. if the gene exists, do a task, otherwise return None'''
@@ -29,8 +28,13 @@ class StatisticalAnalysis:
             hcc_mean = mean(self.gene_data.hcc_dict[gene])
             return normal_mean - hcc_mean
         return None
-    '''according to the threshold value that user enters, compares the gene expressions from gene_exp 
-    dictionary. if the value is greater than threshold, return its value and add it to the list'''
-    def above_threshold(self, gene, threshold):   # initialize with a special gene and threshold amount.
-        self.above_threshold_values = [value for value in self.gene_data.gene_exp[gene] if value > threshold]
+
+    def above_threshold(self, gene, threshold):
+        '''with enumerate method I combine the samples with gene expressions if the gene expression is greater
+        than the threshold enter by user'''
+        self.above_threshold_values = [
+            (self.gene_data.samples[i], value)
+            for i, value in enumerate(self.gene_data.gene_exp[gene])
+            if value > threshold
+        ]
         return self.above_threshold_values
