@@ -5,12 +5,15 @@ class GeneExpressionData:
         self.gene_exp = {}   # a dictionary to keep values of each gene regardless of type(normal or HCC)
         self.normal_dict = {}   # a dictionary to divide gene expressions corresponding to 'normal' type
         self.hcc_dict = {}   # a dictionary to divide gene expressions corresponding to 'HCC' type
+        self.samples = []  # list to store sample names
 
     '''function to read the file and store data'''
     def read_file(self):
         with open(self.file_path, 'r', encoding='ascii') as file:   # open file in read mode with ascii encoder
             lines = file.readlines()   # read the whole lines
             headers = lines[0].strip().split(',')   # assume the first line split by ',' as the header
+            '''keep the sample values split by ',' in self.samples list'''
+            self.samples = [line.split(',')[0] for line in lines[1:]]
 
             '''in the header, from the third cell to the end, I assumed to gene name(header). each column has
              expressions and values for each gene. so, I'm going to make an empty list(as values of the dictionary) to
@@ -21,10 +24,10 @@ class GeneExpressionData:
             for line in lines[1:]:   # read the file line by line
                 values = line.strip().split(',')
                 sample_type = values[1]   # Assume the second column is gene type
-
                 ''' complete the dictionary with headers(keys) and append the values to that empty list '''
                 for key, value in zip(headers[2:], values[2:]):
-                    self.gene_exp[key].append(float(value))   # append the floated values as value of gene_exp dictionary
+                    self.gene_exp[key].append(float(value)) #append the floated values as value of gene_exp dictionary
+
 
                 if sample_type == 'normal':   # check the type
                     for key, value in zip(headers[2:], values[2:]):
@@ -37,6 +40,6 @@ class GeneExpressionData:
                     for key, value in zip(headers[2:], values[2:]):
                         if key not in self.hcc_dict:
                             self.hcc_dict[key] = []   # make a new key
-                        self.hcc_dict[key].append(float(value))   # if it exists, append it
+                        self.hcc_dict[key].append(float(value))    # if it exists, append it
         ''' return the values. we don't need to return samples but I do it for reassurance '''
-        return self.gene_exp, self.normal_dict, self.hcc_dict   # after the end of each loop, return the value of variables.
+        return self.gene_exp, self.normal_dict, self.hcc_dict
