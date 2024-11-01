@@ -1,9 +1,7 @@
 # Gene Expression Data Analysis
 
 The goal of this code is to analyze some data from a file. This analysis causes us to find out how genes are
-turned on/off in liver affected by cancer compared to healthy liver. So, the user can enter a gene name and,
-by this code, can see the mean, median, and standard deviation of values among 357 samples. Also, it is possible to
-calculate the differential (The numerical difference between the values of a gene when it is in a normal state and
+turned on/off in the liver affected by cancer compared to a healthy liver. Especially by calculating differential you can find that the gene is TSG(Tumor suppressor gene) or Ancogene. So, the user can enter a gene name, and the mean, median, and standard deviation of values among 357 samples can be seen using this code. Also, it is possible to calculate the differential (The numerical difference between the values of a gene when it is in a normal state and
 when it is affected by cancer.)
 ## Table of Contents
 - [Dependencies](#dependencies)
@@ -13,7 +11,7 @@ when it is affected by cancer.)
 - [Classes and Methods](#classes-and-methods)
 - [Contact](#contact)
 ## Dependencies
-- Python 3.x
+- Python 3
 
 Libraries:
 * statistics (standard Python library)
@@ -42,7 +40,7 @@ In this class I try to manipulate, store and read the data(file).
 Make a class in order to do some statistical operations. I made an object(gene_data) of GeneExpressionData class as
 a parameter of statisticalAnalysis class.
 - AnalysisReport.py:
-Displays and outputs analysis results in suitable format.
+Displays and outputs analysis results in a suitable format.
 - main.py:
 Main script to run the program
 - README.md:
@@ -59,12 +57,12 @@ Reads, manipulates, and stores gene expression data from a CSV file(Liver_GSE145
 5. normal_dict: A dictionary to divide gene expressions corresponding to 'normal' type
 6. hcc_dict: A dictionary to divide gene expressions corresponding to 'HCC' type
 #### Methods:
-1. read_file: Read expression data file and stores the data
+1. read_file: Read the expression data file and store the data
 
 ### StatisticalAnalysis 
 #### purpose:
 A class in order to do some statistical operations. I made an object(gene_data) of GeneExpressionData class as
-a parameter of statisticalAnalysis class. Also, you can find gene values that are above threshold that user wants.
+a parameter of statisticalAnalysis class. Also, you can find gene values that are above the threshold that the user wants.
 #### Attributes:
 gene_data: An object of GeneExpressionData class.
 #### Methods:
