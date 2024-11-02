@@ -22,7 +22,7 @@ class AnalysisReport:
         for analysis_type, result in results:
             result_str = f"{result:.3f}" if result is not None else "Not found"
             if self.destination == 'screen':   # check the destination
-                print(f"{analysis_type} for {gene}: {result_str}")   # use f-string to show the result
+                print(f"{analysis_type} for {gene}: {result_str}\n",'=' * 70)   # use f-string to show the result
             else:   # if the destination is a file, this snippet code can append into the path the user enters
                 with open(self.destination, 'a') as file:
                     file.write(f"{analysis_type} for {gene}: {result_str}\n")
