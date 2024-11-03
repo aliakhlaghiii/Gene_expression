@@ -1,40 +1,72 @@
-'''in this assignment, we need just 3 modules among the whole modules of the standard statistics library. so,
-I imported just the mean, standard deviation and median to save the memory'''
-from statistics import mean, median, stdev   # call statistics library
+from statistics import mean, median, stdev  # Importing specific functions
 
-'''I have made a class to do some statistical operations. Also, I 
-made an object(gene_data) of GeneExpressionData class as a parameter of statisticalAnalysis class'''
 class StatisticalAnalysis:
-    def __init__(self, gene_data):   # initializing with gene_data(as an instance).
+    """Class to perform statistical analyses on gene expression data."""
+
+    def __init__(self, gene_data):
+        """Initialize with gene_data instance."""
         self.gene_data = gene_data
 
-    '''a function to calculate the mean of gene values(expressions)
-    all of them do the same work. if the gene exists, do a task, otherwise return None'''
     def calculate_mean(self, gene):
+        """Calculate the mean of gene expression values.
+        
+        Args:
+            gene (str): Gene identifier.
+        
+        Returns:
+            float or None: Mean of expression values if gene exists, else None.
+        """
         return mean(self.gene_data.gene_exp[gene]) if gene in self.gene_data.gene_exp else None
 
-    '''a function to calculate the standard deviation of gene values(expressions)'''
     def calculate_sd(self, gene):
+        """Calculate the standard deviation of gene expression values.
+
+        Args:
+            gene (str): Gene identifier.
+        
+        Returns:
+            float or None: Standard deviation if gene exists, else None.
+        """
         return stdev(self.gene_data.gene_exp[gene]) if gene in self.gene_data.gene_exp else None
 
-    '''a function to calculate the median of gene values(expressions)'''
     def calculate_median(self, gene):
+        """Calculate the median of gene expression values.
+
+        Args:
+            gene (str): Gene identifier.
+        
+        Returns:
+            float or None: Median if gene exists, else None.
+        """
         return median(self.gene_data.gene_exp[gene]) if gene in self.gene_data.gene_exp else None
 
-    '''a function to calculate the differential of gene values(normal - hcc)'''
     def calculate_differential(self, gene):
-        if gene in self.gene_data.normal_dict and gene in self.gene_data.hcc_dict:   # if gene exists
+        """Calculate differential expression between normal and HCC conditions.
+
+        Args:
+            gene (str): Gene identifier.
+        
+        Returns:
+            float or None: Differential if gene exists in both dictionaries, else None.
+        """
+        if gene in self.gene_data.normal_dict and gene in self.gene_data.hcc_dict:
             normal_mean = mean(self.gene_data.normal_dict[gene])
             hcc_mean = mean(self.gene_data.hcc_dict[gene])
             return normal_mean - hcc_mean
         return None
 
     def above_threshold(self, gene, threshold):
-        '''with enumerate method I combine the samples with gene expressions if the gene expression is greater
-        than the threshold enter by user'''
-        self.above_threshold_values = [
+        """Get samples where gene expression exceeds a specified threshold.
+
+        Args:
+            gene (str): Gene identifier.
+            threshold (float): Threshold value to compare against.
+        
+        Returns:
+            list of tuples: Sample names and values where expression > threshold.
+        """
+        return [
             (self.gene_data.samples[i], value)
-            for i, value in enumerate(self.gene_data.gene_exp[gene])
+            for i, value in enumerate(self.gene_data.gene_exp.get(gene, []))
             if value > threshold
         ]
-        return self.above_threshold_values
