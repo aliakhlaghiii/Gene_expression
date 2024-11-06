@@ -12,8 +12,8 @@ class GeneExpressionData:
         with open(self.file_path, 'r', encoding='ascii') as file:   # open file in read mode with ascii encoder
             lines = file.readlines()   # read the whole lines
             headers = lines[0].strip().split(',')   # assume the first line split by ',' as the header
-            '''keep the sample values split by ',' in self.samples list'''
-            self.samples = [line.split(',')[0] for line in lines[1:]]
+            '''keep the sample values split by ',' in self.samples list(the first element of each line)'''
+            self.samples = [line.split(',')[0] for line in lines[1:]]   # lines[1:] refers to after header row.
 
             '''in the header, from the third cell to the end, I assumed to gene name(header). each column has
              expressions and values for each gene. so, I'm going to make an empty list(as values of the dictionary) to
@@ -35,11 +35,11 @@ class GeneExpressionData:
                         if key not in self.normal_dict:
                             self.normal_dict[key] = []   # if the gene name does not exist, make a new one
                         ''' if gene name exists, just append its values '''
-                        self.normal_dict[key].append(float(value))   # if it exists, append it
+                        self.normal_dict[key].append(float(value))   # in any case, append it
                 elif sample_type == 'HCC':   # as same as Normal, I checked HCC conditions
                     for key, value in zip(headers[2:], values[2:]):
                         if key not in self.hcc_dict:
                             self.hcc_dict[key] = []   # make a new key
-                        self.hcc_dict[key].append(float(value))    # if it exists, append it
-        ''' return the values. we don't need to return samples but I do it for reassurance '''
+                        self.hcc_dict[key].append(float(value))    # in any case, append it
+        ''' return the values'''
         return self.gene_exp, self.normal_dict, self.hcc_dict
