@@ -41,5 +41,9 @@ class GeneExpressionData:
                         if key not in self.hcc_dict:
                             self.hcc_dict[key] = []   # make a new key
                         self.hcc_dict[key].append(float(value))    # in any case, append it
-        ''' return the values'''
-        return self.gene_exp, self.normal_dict, self.hcc_dict
+        
+        
+    def __str__(self):
+        return f"\nYour file has {len(self.gene_exp)} genes, and {len(self.samples)} samples\n"    
+        
+        
