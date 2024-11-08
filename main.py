@@ -1,45 +1,51 @@
+import sys
 import argparse
-from GeneExpressionData import GeneExpressionData
-from StatisticalAnalysis import StatisticalAnalysis
-from AnalysisReport import AnalysisReport
 
-def main(file_path, destination, gene_name, threshold):
-    """Perform statistical analysis on gene expression data and display results.
+def get_gene_names():
+    """Collect multiple gene names from the user until they enter a special character."""
+    print("Enter gene names one by one. Type '#' to finish:")
+    gene_names = []
+    for line in sys.stdin:   
+        gene = line.strip()
+        if gene == "#":
+            break
+        gene_names.append(gene)
+    return gene_names
 
-    Args:
-        file_path (str): Path to the gene expression data file.
-        destination (str): Output destination, either 'screen' or a file path.
-        gene_name (str): Name of the gene to analyze.
-        threshold (float): Threshold for gene expression filtering.
-    """
+def main(file_path, destination, gene_names, threshold):
+    """Perform statistical analysis on multiple genes."""
     try:
+        from GeneExpressionData import GeneExpressionData
+        from StatisticalAnalysis import StatisticalAnalysis
+        from AnalysisReport import AnalysisReport
+        
         gene_data = GeneExpressionData(file_path)
         gene_data.read_file()
-        
+
         analysis = StatisticalAnalysis(gene_data)
         report = AnalysisReport(destination)
 
-        # Display analysis report
-        report.display(analysis, gene_name, threshold)
+        for gene in gene_names:
+            print(f"\nAnalysis for gene: {gene}")
+            report.display(analysis, gene, threshold)
 
     except FileNotFoundError as e:
         print(f"Error: {e}")
+        sys.exit(1)
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
+        sys.exit(1)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Analyze gene expression data and perform statistical analysis."
-    )
-
-    # Define positional arguments
+    parser = argparse.ArgumentParser(description="Analyze gene expression data.")
     parser.add_argument("file_path", type=str, help="Path to the gene expression data file.")
     parser.add_argument("destination", type=str, help="Output destination ('screen' or a file path).")
-    parser.add_argument("gene_name", type=str, help="Gene name to analyze.")
     parser.add_argument("threshold", type=float, help="Threshold for gene expression filtering.")
-
-    # Parse arguments
+    
     args = parser.parse_args()
 
-    # Call main function with parsed arguments
-    main(args.file_path, args.destination, args.gene_name, args.threshold)
+    # Collect multiple gene names from the user
+    gene_names = get_gene_names()
+
+    # Call main with all arguments
+    main(args.file_path, args.destination, gene_names, args.threshold)
