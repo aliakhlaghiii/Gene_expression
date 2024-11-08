@@ -1,51 +1,64 @@
-import sys
+"""
+main.py: This script runs statistical analyses on gene expression data.
+It reads input from a file, performs various statistical analyses, 
+and outputs the results either to the screen or a file.
+"""
 import argparse
+from GeneExpressionData import GeneExpressionData
+from StatisticalAnalysis import StatisticalAnalysis
+from AnalysisReport import AnalysisReport
 
-def get_gene_names():
-    """Collect multiple gene names from the user until they enter a special character."""
-    print("Enter gene names one by one. Type '#' to finish:")
-    gene_names = []
-    for line in sys.stdin:   
-        gene = line.strip()
-        if gene == "#":
-            break
-        gene_names.append(gene)
-    return gene_names
 
-def main(file_path, destination, gene_names, threshold):
-    """Perform statistical analysis on multiple genes."""
+def main(file_path, destination, gene_list, threshold):
+    """
+    Main function to perform statistical analysis on gene expression data.
+
+    Args:
+        file_path (str): Path to the gene expression data file.
+        destination (str): Output destination ('screen' or a file path').
+        gene_list (list of str): List of gene names to analyze.
+        threshold (float): Threshold for gene expression filtering.
+    """
     try:
-        from GeneExpressionData import GeneExpressionData
-        from StatisticalAnalysis import StatisticalAnalysis
-        from AnalysisReport import AnalysisReport
-        
         gene_data = GeneExpressionData(file_path)
         gene_data.read_file()
-
+        print(gene_data)
         analysis = StatisticalAnalysis(gene_data)
         report = AnalysisReport(destination)
 
-        for gene in gene_names:
-            print(f"\nAnalysis for gene: {gene}")
+        for gene in gene_list:
             report.display(analysis, gene, threshold)
 
-    except FileNotFoundError as e:
-        print(f"Error: {e}")
-        sys.exit(1)
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-        sys.exit(1)
+    except FileNotFoundError as file_err:
+        print(f"Error: File not found. {file_err}")
+        return 1
+    except ValueError as value_err:
+        print(f"Error: Invalid value. {value_err}")
+        return 1
+    except Exception as general_err:
+        print(f"An unexpected error occurred: {general_err}")
+        return 2
+    return 0
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Analyze gene expression data.")
+    
+    parser = argparse.ArgumentParser(
+        description="Analyze gene expression data and perform statistical analysis."
+    )
+
     parser.add_argument("file_path", type=str, help="Path to the gene expression data file.")
     parser.add_argument("destination", type=str, help="Output destination ('screen' or a file path).")
     parser.add_argument("threshold", type=float, help="Threshold for gene expression filtering.")
-    
+
+    # Accept multiple gene names
+    parser.add_argument(
+        "gene_names",
+        type=str,
+        nargs='+',
+        help="Gene names to analyze (separate multiple names with a space)."
+    )
+
     args = parser.parse_args()
 
-    # Collect multiple gene names from the user
-    gene_names = get_gene_names()
-
-    # Call main with all arguments
-    main(args.file_path, args.destination, gene_names, args.threshold)
+    main(args.file_path, args.destination, args.gene_names, args.threshold)
