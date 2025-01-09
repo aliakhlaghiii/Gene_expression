@@ -1,4 +1,3 @@
-'''In this class, I try to manipulate, store and read the data'''
 class GeneExpressionData:
     def __init__(self, file_path):   # initialize with file path
         self.file_path = file_path
@@ -7,7 +6,6 @@ class GeneExpressionData:
         self.hcc_dict = {}   # a dictionary to divide gene expressions corresponding to 'HCC' type
         self.samples = []  # list to store sample names
 
-    '''function to read the file and store data'''
     def read_file(self):
         with open(self.file_path, 'r', encoding='ascii') as file:   # open file in read mode with ascii encoder
             lines = file.readlines()   # read the whole lines
@@ -24,17 +22,14 @@ class GeneExpressionData:
             for line in lines[1:]:   # read the file line by line
                 values = line.strip().split(',')
                 sample_type = values[1]   # Assume the second column is gene type
-                ''' complete the dictionary with headers(keys) and append the values to that empty list '''
                 for key, value in zip(headers[2:], values[2:]):
                     self.gene_exp[key].append(float(value)) #append the floated values as value of gene_exp dictionary
 
 
                 if sample_type == 'normal':   # check the type
                     for key, value in zip(headers[2:], values[2:]):
-                        ''' if gene name doesn't exist, make an empty list to put the values in it '''
                         if key not in self.normal_dict:
                             self.normal_dict[key] = []   # if the gene name does not exist, make a new one
-                        ''' if gene name exists, just append its values '''
                         self.normal_dict[key].append(float(value))   # in any case, append it
                 elif sample_type == 'HCC':   # as same as Normal, I checked HCC conditions
                     for key, value in zip(headers[2:], values[2:]):
