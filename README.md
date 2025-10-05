@@ -2,7 +2,7 @@
 
 The goal of this code is to analyze some data from a file. This analysis causes us to find out how genes are
 turned on/off in the liver affected by cancer compared to a healthy liver. Especially by calculating differential you can find that the gene is TSG(Tumor suppressor gene) or Ancogene. So, the user can enter a gene name, and the mean, median, and standard deviation of values among 357 samples can be seen using this code. Also, it is possible to calculate the differential (The numerical difference between the values of a gene when it is in a normal state and
-when it is affected by cancer.)
+when it is affected by cancer.
 ## Table of Contents
 - [Dependencies](#dependencies)
 - [Installation](#installation)
